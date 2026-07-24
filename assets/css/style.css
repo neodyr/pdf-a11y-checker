@@ -99,8 +99,9 @@ strong { color: var(--text); }
   .theme-toggle-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
 }
 
-/* Contenu */
-main { padding: 4.5rem 0 4rem; }
+/* Contenu — cible main.container pour l'emporter sur .container (sinon le padding
+   vertical était remis à 0 par .container, plus spécifique que le sélecteur main). */
+main.container { padding-top: 4.5rem; padding-bottom: 4rem; }
 .label { font-family: var(--mono); font-size: 0.85rem; color: var(--link); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.5rem; }
 .intro { color: var(--text-dim); max-width: 46rem; }
 
