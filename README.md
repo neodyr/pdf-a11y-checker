@@ -39,6 +39,18 @@ npx http-server . -p 8080
 
 Déposez un PDF (ou cliquez pour le choisir) → le rapport s'affiche.
 
+### Version autonome (hors ligne)
+
+Un **fichier HTML unique** embarquant tout (CSS, polices, pdf.js) est disponible en
+téléchargement depuis l'outil, ou en le générant :
+
+```bash
+node build-standalone.mjs   # → pdf-a11y-checker.html
+```
+
+Ce fichier fonctionne **sans serveur ni connexion** : téléchargez-le, ouvrez-le dans un
+navigateur, il analyse vos PDF en local. Idéal pour un poste isolé ou des documents sensibles.
+
 ## ♿ Accessibilité de l'outil
 
 L'outil est lui-même conçu pour être accessible (RGAA / WCAG 2.1 AA) : structure sémantique,

@@ -1,3 +1,6 @@
 node_modules/
 .DS_Store
 *.log
+
+# Fichier autonome généré par build-standalone.mjs (régénéré par la CI au déploiement)
+pdf-a11y-checker.html
