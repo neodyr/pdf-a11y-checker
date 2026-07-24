@@ -11,6 +11,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('../vendor/pdf.worker.min.mjs',
 const input = document.getElementById('pdf-input');
 const dropzone = document.getElementById('dropzone');
 const statusEl = document.getElementById('status');
+const errorEl = document.getElementById('error');
+const announceEl = document.getElementById('a11y-announce');
 const resultsEl = document.getElementById('results');
 const resultsTitle = document.getElementById('results-title');
 const summaryEl = document.getElementById('results-summary');
@@ -35,7 +37,8 @@ dropzone.addEventListener('drop', (e) => {
 /* ---------- Traitement ---------- */
 async function handleFile(file) {
   resultsEl.hidden = true;
-  statusEl.classList.remove('is-error');
+  errorEl.textContent = '';
+  announceEl.textContent = '';
 
   if (file.type !== 'application/pdf' && !/\.pdf$/i.test(file.name)) {
     setError('Ce fichier n’est pas un PDF. Choisissez un document au format PDF.');
@@ -58,8 +61,8 @@ async function handleFile(file) {
 }
 
 function setError(message) {
-  statusEl.textContent = message;
-  statusEl.classList.add('is-error');
+  statusEl.textContent = '';
+  errorEl.textContent = message; // zone role=alert : annonce assertive + message visible
 }
 
 /* ---------- Analyse ---------- */
@@ -188,7 +191,7 @@ function render(fileName, { checks, pageCount }) {
     badge.className = 'check-badge';
     badge.textContent = badges[c.status];
     const body = document.createElement('div');
-    const h = document.createElement('p');
+    const h = document.createElement('h3');
     h.className = 'check-label';
     h.textContent = c.label;
     const d = document.createElement('p');
@@ -207,4 +210,6 @@ function render(fileName, { checks, pageCount }) {
 
   resultsEl.hidden = false;
   resultsTitle.focus();
+  // Annonce le bilan aux technologies d'assistance (le focus seul ne lit que le titre).
+  announceEl.textContent = `Analyse terminée. ${summary}`;
 }

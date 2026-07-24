@@ -38,7 +38,7 @@
         <label class="dropzone-label" for="pdf-input">
           <span class="dropzone-icon" aria-hidden="true">📄</span>
           <span class="dropzone-title">Choisir un fichier PDF</span>
-          <span class="dropzone-sub">ou le glisser ici</span>
+          <span class="dropzone-sub" aria-hidden="true">ou le glisser ici</span>
         </label>
         <input type="file" id="pdf-input" name="pdf" accept="application/pdf,.pdf" aria-describedby="pdf-hint" />
       </div>
@@ -46,7 +46,9 @@
       <p id="privacy-note" class="hint">🔒 Confidentiel&nbsp;: l'analyse est 100&nbsp;% locale, aucun envoi de données.</p>
     </form>
 
-    <section id="status" class="status" role="status" aria-live="polite"></section>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <p id="error" class="status is-error" role="alert"></p>
+    <div id="a11y-announce" class="sr-only" aria-live="polite"></div>
 
     <section id="results" class="results" aria-labelledby="results-title" hidden>
       <h2 id="results-title" tabindex="-1">Résultats de l'analyse</h2>

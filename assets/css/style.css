@@ -38,6 +38,12 @@ strong { color: var(--text); }
 
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
 
+/* Réservé aux lecteurs d'écran (annonces non visuelles) */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
 /* Accessibilité : lien d'évitement + focus visible */
 .skip-link {
   position: absolute; left: 12px; top: -60px; z-index: 100;
@@ -58,7 +64,7 @@ strong { color: var(--text); }
 .brand-tag { font-family: var(--mono); font-size: 0.8rem; color: var(--text-mute); }
 
 /* Contenu */
-main { padding: 3rem 0 4rem; }
+main { padding: 4.5rem 0 4rem; }
 .label { font-family: var(--mono); font-size: 0.85rem; color: var(--signal); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.5rem; }
 .intro { color: var(--text-dim); max-width: 46rem; }
 
@@ -89,6 +95,8 @@ main { padding: 3rem 0 4rem; }
 /* Statut (chargement / erreur) */
 .status { margin: 1rem 0; font-family: var(--mono); font-size: 0.9rem; color: var(--text-dim); min-height: 1.2em; }
 .status.is-error { color: var(--fail); }
+/* La zone d'erreur (role=alert) ne réserve pas d'espace tant qu'elle est vide */
+#error:empty { margin: 0; min-height: 0; }
 
 /* Résultats */
 .results { margin-top: 2rem; }
@@ -102,14 +110,16 @@ main { padding: 3rem 0 4rem; }
 .check.ok   { border-left-color: var(--ok); }
 .check.fail { border-left-color: var(--fail); }
 .check.warn { border-left-color: var(--warn); }
+/* Badge : pastille pleine, texte foncé — statut lisible au coup d'œil (couleur + mot) */
 .check-badge {
-  font-family: var(--mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  padding: 0.25rem 0.5rem; border-radius: 6px; height: fit-content; white-space: nowrap;
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.02em; padding: 0.28rem 0.55rem; border-radius: 6px;
+  height: fit-content; white-space: nowrap;
 }
-.check.ok .check-badge   { background: rgba(79, 225, 163, 0.15); color: var(--ok); }
-.check.fail .check-badge { background: rgba(255, 143, 143, 0.15); color: var(--fail); }
-.check.warn .check-badge { background: rgba(255, 207, 107, 0.15); color: var(--warn); }
-.check-label { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--text); margin: 0 0 0.2rem; }
+.check.ok .check-badge   { background: var(--ok);   color: #042016; }
+.check.fail .check-badge { background: var(--fail); color: #3a0000; }
+.check.warn .check-badge { background: var(--warn); color: #3a2800; }
+.check-label { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.0625rem; letter-spacing: -0.01em; line-height: 1.3; color: var(--text); margin: 0 0 0.2rem; }
 .check-detail { color: var(--text-dim); font-size: 0.95rem; margin: 0; }
 .check-ref { font-family: var(--mono); font-size: 0.78rem; color: var(--text-mute); }
 .disclaimer { color: var(--text-mute); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 1.2rem; }
