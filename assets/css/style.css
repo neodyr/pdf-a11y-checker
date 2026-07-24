@@ -1,0 +1,119 @@
+/* Vérificateur d'accessibilité PDF — thème Neodyr (sombre), accessible AA. */
+
+:root {
+  --bg:        #0a0d13;
+  --bg-1:      #0d1119;
+  --surface:   #111723;
+  --line:      #1d2533;
+  --text:      #eef1f6;   /* 17:1 sur --bg */
+  --text-dim:  #aab4c5;   /* 8.7:1 sur --bg */
+  --text-mute: #7f8ba0;   /* 4.9:1 sur --bg */
+  --signal:    #4fe1a3;   /* vert vif */
+  --signal-dim:rgba(79, 225, 163, 0.12);
+  --ok:        #4fe1a3;
+  --fail:      #ff8f8f;   /* rouge clair lisible sur sombre (>= 4.5:1) */
+  --warn:      #ffcf6b;   /* jaune lisible sur sombre */
+  --mono:      'JetBrains Mono', ui-monospace, monospace;
+  --radius:    12px;
+  --maxw:      52rem;
+}
+
+* , *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 1.0625rem;
+}
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin: 0.2em 0 0.5em; }
+h2 { font-size: 1.5rem; margin: 0 0 0.6em; }
+p { margin: 0 0 1em; }
+a { color: var(--signal); text-underline-offset: 0.15em; }
+a:hover { text-decoration: underline; }
+strong { color: var(--text); }
+
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
+
+/* Accessibilité : lien d'évitement + focus visible */
+.skip-link {
+  position: absolute; left: 12px; top: -60px; z-index: 100;
+  background: var(--signal); color: #042016; font-weight: 600;
+  padding: 12px 18px; border-radius: 10px; font-family: var(--mono);
+  text-decoration: none; transition: top 0.2s;
+}
+.skip-link:focus { top: 12px; }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* En-tête */
+.site-header { border-bottom: 1px solid var(--line); padding: 1rem 0; }
+.site-header .container { display: flex; align-items: center; gap: 1rem; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+.brand-mark { width: 12px; height: 12px; border-radius: 3px; background: var(--signal); box-shadow: 0 0 12px var(--signal); }
+.brand-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.2rem; }
+.brand-tag { font-family: var(--mono); font-size: 0.8rem; color: var(--text-mute); }
+
+/* Contenu */
+main { padding: 3rem 0 4rem; }
+.label { font-family: var(--mono); font-size: 0.85rem; color: var(--signal); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.5rem; }
+.intro { color: var(--text-dim); max-width: 46rem; }
+
+/* Zone de dépôt */
+#pdf-form { margin: 2rem 0 1rem; }
+.dropzone {
+  position: relative;
+  border: 2px dashed var(--line); border-radius: var(--radius);
+  background: var(--bg-1); transition: border-color 0.2s, background 0.2s;
+}
+.dropzone.is-dragover { border-color: var(--signal); background: var(--signal-dim); }
+.dropzone-label {
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  padding: 2.5rem 1.5rem; text-align: center; cursor: pointer;
+}
+.dropzone-icon { font-size: 2rem; }
+.dropzone-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.15rem; color: var(--text); }
+.dropzone-sub { color: var(--text-dim); font-size: 0.95rem; }
+/* Le champ reste focalisable au clavier mais visuellement discret (le label sert de cible). */
+#pdf-input {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer;
+}
+#pdf-input:focus-visible + .dropzone-label,
+.dropzone:focus-within { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: var(--radius); }
+.hint { font-family: var(--mono); font-size: 0.85rem; color: var(--text-mute); margin: 0.5rem 0 0; }
+
+/* Statut (chargement / erreur) */
+.status { margin: 1rem 0; font-family: var(--mono); font-size: 0.9rem; color: var(--text-dim); min-height: 1.2em; }
+.status.is-error { color: var(--fail); }
+
+/* Résultats */
+.results { margin-top: 2rem; }
+.results-summary { font-size: 1.15rem; color: var(--text); }
+.checks { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: 0.75rem; }
+.check {
+  display: grid; grid-template-columns: auto 1fr; gap: 0.9rem;
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 4px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem;
+}
+.check.ok   { border-left-color: var(--ok); }
+.check.fail { border-left-color: var(--fail); }
+.check.warn { border-left-color: var(--warn); }
+.check-badge {
+  font-family: var(--mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  padding: 0.25rem 0.5rem; border-radius: 6px; height: fit-content; white-space: nowrap;
+}
+.check.ok .check-badge   { background: rgba(79, 225, 163, 0.15); color: var(--ok); }
+.check.fail .check-badge { background: rgba(255, 143, 143, 0.15); color: var(--fail); }
+.check.warn .check-badge { background: rgba(255, 207, 107, 0.15); color: var(--warn); }
+.check-label { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--text); margin: 0 0 0.2rem; }
+.check-detail { color: var(--text-dim); font-size: 0.95rem; margin: 0; }
+.check-ref { font-family: var(--mono); font-size: 0.78rem; color: var(--text-mute); }
+.disclaimer { color: var(--text-mute); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 1.2rem; }
+
+/* Pied de page */
+.site-footer { border-top: 1px solid var(--line); padding: 1.5rem 0; }
+.site-footer p { margin: 0; color: var(--text-mute); font-size: 0.9rem; }

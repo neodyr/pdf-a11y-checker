@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vérificateur d'accessibilité PDF — Neodyr</title>
+  <meta name="description" content="Vérifiez l'accessibilité d'un PDF (balisage, titre, langue, alternatives) directement dans votre navigateur. Le fichier n'est jamais envoyé. Un outil Neodyr." />
+  <meta name="theme-color" content="#0a0d13" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/fonts.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu principal</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="https://neodyr.com" aria-label="Neodyr — accueil (nouvel onglet)" target="_blank" rel="noopener">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">neodyr</span>
+      </a>
+      <span class="brand-tag" aria-hidden="true">~/pdf·accessibilité</span>
+    </div>
+  </header>
+
+  <main id="main" class="container" tabindex="-1">
+    <p class="label">// vérificateur d'accessibilité pdf</p>
+    <h1>Votre PDF est-il accessible&nbsp;?</h1>
+    <p class="intro">
+      Déposez un document PDF&nbsp;: cet outil vérifie les points essentiels d'accessibilité
+      (balisage, titre, langue, alternatives des images, texte réel ou scan…) selon le RGAA 4.1
+      et la norme PDF/UA. <strong>Tout se passe dans votre navigateur — le fichier n'est jamais
+      envoyé sur Internet.</strong>
+    </p>
+
+    <form id="pdf-form" aria-describedby="privacy-note">
+      <div class="dropzone" id="dropzone">
+        <label class="dropzone-label" for="pdf-input">
+          <span class="dropzone-icon" aria-hidden="true">📄</span>
+          <span class="dropzone-title">Choisir un fichier PDF</span>
+          <span class="dropzone-sub">ou le glisser ici</span>
+        </label>
+        <input type="file" id="pdf-input" name="pdf" accept="application/pdf,.pdf" aria-describedby="pdf-hint" />
+      </div>
+      <p id="pdf-hint" class="hint">Formats acceptés&nbsp;: PDF. Taille limitée par votre navigateur.</p>
+      <p id="privacy-note" class="hint">🔒 Confidentiel&nbsp;: l'analyse est 100&nbsp;% locale, aucun envoi de données.</p>
+    </form>
+
+    <section id="status" class="status" role="status" aria-live="polite"></section>
+
+    <section id="results" class="results" aria-labelledby="results-title" hidden>
+      <h2 id="results-title" tabindex="-1">Résultats de l'analyse</h2>
+      <p id="results-summary" class="results-summary"></p>
+      <ul id="results-list" class="checks"></ul>
+      <p class="disclaimer">
+        Ce diagnostic couvre les points automatiquement vérifiables. Un PDF réellement accessible
+        nécessite aussi une vérification humaine (ordre de lecture, pertinence des alternatives,
+        structure des tableaux). <a href="https://neodyr.com" target="_blank" rel="noopener">Neodyr vous accompagne</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        Un outil <a href="https://neodyr.com" target="_blank" rel="noopener">Neodyr</a> —
+        audit, mise en conformité et formation RGAA.
+        <a href="https://neodyr.com/guide-rgaa/consultation.html" target="_blank" rel="noopener">Critère RGAA 13.3</a>.
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
