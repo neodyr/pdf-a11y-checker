@@ -5,10 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vérificateur d'accessibilité PDF — Neodyr</title>
   <meta name="description" content="Vérifiez l'accessibilité d'un PDF (balisage, titre, langue, alternatives) directement dans votre navigateur. Le fichier n'est jamais envoyé. Un outil Neodyr." />
-  <meta name="theme-color" content="#0a0d13" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0d13" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+  <!-- Applique le thème avant le rendu pour éviter tout flash (FOUC). -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('neodyr-theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Aller au contenu principal</a>
@@ -20,6 +35,10 @@
         <span class="brand-name">neodyr</span>
       </a>
       <span class="brand-tag" aria-hidden="true">~/pdf·accessibilité</span>
+      <button type="button" id="theme-toggle" class="theme-toggle">
+        <span class="theme-toggle-icon" aria-hidden="true">☀️</span>
+        <span class="theme-toggle-label">Thème clair</span>
+      </button>
     </div>
   </header>
 

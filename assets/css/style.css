@@ -1,6 +1,7 @@
 /* Vérificateur d'accessibilité PDF — thème Neodyr (sombre), accessible AA. */
 
 :root {
+  /* Thème SOMBRE — défaut (charte Neodyr). */
   --bg:        #0a0d13;
   --bg-1:      #0d1119;
   --surface:   #111723;
@@ -8,14 +9,33 @@
   --text:      #eef1f6;   /* 17:1 sur --bg */
   --text-dim:  #aab4c5;   /* 8.7:1 sur --bg */
   --text-mute: #7f8ba0;   /* 4.9:1 sur --bg */
-  --signal:    #4fe1a3;   /* vert vif */
+  --signal:    #4fe1a3;   /* accent décoratif : marque, focus, pastille de lien */
+  --on-signal: #042016;   /* texte posé sur une surface --signal */
   --signal-dim:rgba(79, 225, 163, 0.12);
+  --link:      #4fe1a3;   /* texte de lien / label (lisible sur --bg) */
   --ok:        #4fe1a3;
   --fail:      #ff8f8f;   /* rouge clair lisible sur sombre (>= 4.5:1) */
   --warn:      #ffcf6b;   /* jaune lisible sur sombre */
   --mono:      'JetBrains Mono', ui-monospace, monospace;
   --radius:    12px;
   --maxw:      52rem;
+}
+
+/* Thème CLAIR — appliqué via [data-theme="light"] (choix explicite OU préférence
+   système résolue par le script en <head>). Contrastes vérifiés AA. */
+:root[data-theme="light"] {
+  --bg:        #ffffff;
+  --bg-1:      #f4f6fa;
+  --surface:   #f7f9fc;
+  --line:      #dbe1ea;
+  --text:      #101620;   /* 18:1 sur blanc */
+  --text-dim:  #3d4757;   /* 9:1 */
+  --text-mute: #59657a;   /* 5.6:1 — OK même en petit corps */
+  --signal:    #0a7d54;   /* vert foncé : focus/contour visibles sur blanc (>= 3:1) */
+  --on-signal: #ffffff;
+  --signal-dim:rgba(10, 125, 84, 0.10);
+  --link:      #067a52;   /* 5:1 sur blanc */
+  /* --ok / --fail / --warn : identiques (pastilles autoportantes, texte foncé) */
 }
 
 * , *::before, *::after { box-sizing: border-box; }
@@ -27,12 +47,13 @@ body {
   color: var(--text);
   line-height: 1.7;
   font-size: 1.0625rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
 h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin: 0.2em 0 0.5em; }
 h2 { font-size: 1.5rem; margin: 0 0 0.6em; }
 p { margin: 0 0 1em; }
-a { color: var(--signal); text-underline-offset: 0.15em; }
+a { color: var(--link); text-underline-offset: 0.15em; }
 a:hover { text-decoration: underline; }
 strong { color: var(--text); }
 
@@ -47,7 +68,7 @@ strong { color: var(--text); }
 /* Accessibilité : lien d'évitement + focus visible */
 .skip-link {
   position: absolute; left: 12px; top: -60px; z-index: 100;
-  background: var(--signal); color: #042016; font-weight: 600;
+  background: var(--signal); color: var(--on-signal); font-weight: 600;
   padding: 12px 18px; border-radius: 10px; font-family: var(--mono);
   text-decoration: none; transition: top 0.2s;
 }
@@ -63,9 +84,24 @@ strong { color: var(--text); }
 .brand-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.2rem; }
 .brand-tag { font-family: var(--mono); font-size: 0.8rem; color: var(--text-mute); }
 
+/* Bouton de bascule clair / sombre */
+.theme-toggle {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: var(--mono); font-size: 0.85rem; color: var(--text);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  padding: 0.4rem 0.8rem; cursor: pointer; line-height: 1;
+  transition: border-color 0.2s, background 0.2s;
+}
+.theme-toggle:hover { border-color: var(--signal); }
+.theme-toggle-icon { font-size: 1rem; }
+@media (max-width: 560px) {
+  .brand-tag { display: none; }
+  .theme-toggle-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+}
+
 /* Contenu */
 main { padding: 4.5rem 0 4rem; }
-.label { font-family: var(--mono); font-size: 0.85rem; color: var(--signal); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.5rem; }
+.label { font-family: var(--mono); font-size: 0.85rem; color: var(--link); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.5rem; }
 .intro { color: var(--text-dim); max-width: 46rem; }
 
 /* Zone de dépôt */
