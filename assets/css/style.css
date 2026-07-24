@@ -164,3 +164,6 @@ main.container { padding-top: 4.5rem; padding-bottom: 4rem; }
 /* Pied de page */
 .site-footer { border-top: 1px solid var(--line); padding: 1.5rem 0; }
 .site-footer p { margin: 0; color: var(--text-mute); font-size: 0.9rem; }
+.site-footer .footer-oss { margin-top: 0.5rem; }
+.gh-mark { width: 1.05em; height: 1.05em; vertical-align: -0.17em; margin-right: 0.35em; }
+.gh-link { white-space: nowrap; }
